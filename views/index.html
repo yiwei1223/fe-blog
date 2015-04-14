@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>前端博客</title>
+        <link rel="stylesheet" href="../public/css/index.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="search">
+                    <input type="text" id="keyword" placeholder="请输入文章名称"/>
+                    <div id="search">搜索</div>
+                </div>
+                <div class="nav">
+                    <ul class="nav_ul">
+                        <li><a href="">主页</a></li>
+                        <li><a href="">存档</a></li>
+                        <li><a href="">标签</a></li>
+                        <li><a href="">友情链接</a></li>
+                        <li><a href="">我的博客</a></li>
+                        <li><a href="">上传</a></li>
+                        <li><a href="">发表</a></li>
+                        <li><a href="">退出</a></li>
+                        <li><a href="">登录</a></li>
+                        <li><a href="">注册</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--<div class="content">
+                <div class="blog">
+                    <img src="../public/image/icon.jpg" alt="" class="icon"/>
+                    <div class="blog_info">
+                        <h3 class="blog_name"><a href="#">Grunt自动化构建工具</a></h3>
+                        <ul class="blog_ul">
+                            <li class="tag">前端</li>
+                            <li class="tag">自动化</li>
+                            <li class="man">
+                                <div class="litter_icon_man"></div>
+                                <div class="litter_num">yiwei</div>
+                            </li>
+                            <li class="see">
+                                <div class="litter_icon_see"></div>
+                                <div class="litter_num">25</div>
+                            </li>
+                            <li class="collection">
+                                <div class="litter_icon_collection"></div>
+                                <div class="litter_num">30</div>
+                            </li>
+                            <li class="reprinted">
+                                <div class="litter_icon_reprinted"></div>
+                                <div class="litter_num">50</div>
+                            </li>
+                            <li class="posttime">2015-04-09</li>
+                        </ul>
+                    </div>
+                    <div class="comments">
+                        <span class="num">60</span>
+                        <span class="pinglun">评论</span>
+                    </div>
+                </div>
+            </div>
+            <div class="page">
+                <div class="page-content">
+                    <span class="prev_on prev"></span>
+                    <span class="pages">
+                        <span id="currentPage">1</span>
+                        <span>/</span>
+                        <span id="sumPages">5</span>
+                    </span>
+                    <span class="next next_on"></span>
+                    <span class="input_page">
+                        <input type="text" id="page">
+                    </span>
+                    <span class="go">
+                        <span>GO</span>
+                    </span>
+                </div>
+            </div>-->
+            <!--<div class="login">
+                <div class="login-content">
+                    <h3>登录</h3>
+                    <input type="text" name="username" class="username" placeholder="请输入用户名"/>
+                    <input type="text" name="password" class="password" placeholder="请输入密码"/>
+                    <button id="login">登录</button>
+                </div>
+            </div>
+            <div class="register">
+                <div class="login-content">
+                    <h3>注册</h3>
+                    <input type="text" name="username" class="username" placeholder="请输入用户名"/>
+                    <input type="text" name="password" class="password" placeholder="请输入密码"/>
+                    <input type="text" name="repeat-pwd" class="repeat-pwd" placeholder="请确认密码"/>
+                    <button id="register">注册</button>
+                </div>
+            </div>-->
+            <!--<div class="post">
+                <div class="post-content">
+                    <label for="blog-title">标题</label><br/>
+                    <input type="text" id="blog-title"/>
+                    <div class="tag-content">
+                        <label for="">标签</label><br/>
+                        <input type="text" id="tag1" class="tags"/><input type="text" id="tag2" class="tags"/><input type="text" id="tag3" class="tags"/>
+                    </div>
+                    <div class="blog-text">
+                        <label for="">正文</label><br/>
+                        <textarea name='post' cols='80' rows='15' id="blog"></textarea>
+                    </div>
+                    <div id="post">发表</div>
+                </div>
+            </div>-->
+            <!--<div class="article">
+                <div class="article-head">
+                    <div class="article-head-content">
+                        <h3>神马都是浮云！！</h3>
+                        <ul class="blog_ul">
+                            <li class="tag">前端</li>
+                            <li class="tag">自动化</li>
+                            <li class="man">
+                                <div class="litter_icon_man"></div>
+                                <div class="litter_num">yiwei</div>
+                            </li>
+                            <li class="see">
+                                <div class="litter_icon_see"></div>
+                                <div class="litter_num">25</div>
+                            </li>
+                            <li class="collection">
+                                <div class="litter_icon_collection"></div>
+                                <div class="litter_num">30</div>
+                            </li>
+                            <li class="reprinted">
+                                <div class="litter_icon_reprinted"></div>
+                                <div class="litter_num">50</div>
+                            </li>
+                            <li class="posttime">2015-04-09</li>
+                            <li class="edit user-edit"><a href='#'>编辑</a></li>
+                            <li class="edit"><a href='#'>删除</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="article-content">
+                    sdsfsfsfsdafwgrwndywuwrew23434242jjjjjjjjjjjjjj
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment-input">
+                    <textarea name="comments" rows="3">参与讨论。支持markdown语法</textarea>
+                    <div id="comments">发表评论</div>
+                </div>
+                <ul class="comment-content-ul">
+                    <li>
+                        <div class="comment-content-head">
+                            <img src="../public/image/icon.jpg" alt="" class="comment-icon"/>
+                            <div class="bloger">
+                                <p class="who">leliu</p>
+                                <p class="comment-time">回复于：2015-04-15</p>
+                            </div>
+                            <div class="reply">回复</div>
+                        </div>
+                        <div class="comment-content-msg">
+                            
+                        </div>
+                    </li>
+                    <li>
+                        <div class="comment-content-head">
+                            <img src="../public/image/icon.jpg" alt="" class="comment-icon"/>
+                            <div class="bloger">
+                                <p class="who">leliu</p>
+                                <p class="comment-time">回复于：2015-04-15</p>
+                            </div>
+                            <div class="reply">回复</div>
+                        </div>
+                        <div class="comment-content-msg">
+                            werwrwrwrw
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="alert">登录成功！</div>-->
+            <!--<div class="tags-warp">
+                <div class="tags_1 _tag"><a href="">前端</a></div>
+                <div class="tags_2 _tag"><a href="">前端</a></div>
+                <div class="tags_3 _tag"><a href="">前端</a></div>
+                <div class="tags_4 _tag"><a href="">前端</a></div>
+                <div class="tags_5 _tag"><a href="">前端</a></div>
+                <div class="tags_6 _tag"><a href="">前端</a></div>
+                <div class="tags_7 _tag"><a href="">前端</a></div>
+                <div class="tags_8 _tag"><a href="">前端</a></div>
+                <div class="tags_9 _tag"><a href="">前端</a></div>
+                <div class="tags_10 _tag"><a href="">前端</a></div>
+            </div>-->
+            <!--<div class="link-warp">
+                <div class="link-content-top">
+                    <div class="mongodb">
+                        <img src="../public/image/mongodb.png" alt=""/>
+                        <div class="mongodb-msg">
+                            <h3>mongodb</h3>
+                            <p>NoSQL</p>
+                        </div>
+                    </div>
+                    <div class="mongoose"></div>
+                </div>
+                <div class="link-content-center">
+                    <div class="nodejs"></div>
+                </div>
+                <div class="link-content-bottom">
+                    <div class="express"></div>
+                    <div class="npm"></div>
+                </div>
+            </div>-->
+        </div>
+        <script type="text/javascript" src="../public/js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="../public/js/index.js"></script>
+    </body>
+</html>

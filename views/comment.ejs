@@ -1,0 +1,29 @@
+<div class="comment">
+    <div class="comment-input">
+        <textarea name="comments" rows="3">参与讨论。支持markdown语法</textarea>
+        <% if (user) {%>
+            <div id="comments" data-commentfrom="<%=user.name%>" data-commentto="<%=post.name%>">发表评论</div>
+        <% } else {%>
+            <div id="comments" data-commentfrom="" data-forwho="">发表评论</div>
+        <% } %>
+    </div>
+    <ul class="comment-content-ul">
+    <% post.comments.forEach(function (comment, index) { %>
+        <li>
+            <div class="comment-content-head">
+                <% if (comment.head != "") {%>
+                    <img src="<%=comment.head%>" alt="" class="comment-icon"/>
+                <% } else { %>
+                    <img src="/image/icon.jpg" alt="" class="comment-icon"/>
+                <% } %>
+                <div class="bloger">
+                    <p class="who"><%=comment.fromWho%></p>
+                    <p class="comment-time">回复于：<%=comment.time.minute%></p>
+                </div>
+                <div class="reply">回复</div>
+            </div>
+            <div class="comment-content-msg"><%- comment.content%></div>
+        </li>
+    <% }) %>
+    </ul>
+</div>

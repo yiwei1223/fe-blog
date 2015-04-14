@@ -1,0 +1,17 @@
+<% include header %>
+<div class="post">
+    <div class="post-content">
+        <label for="blog-title">标题</label><br/>
+        <input type="text" id="blog-title" value='<%=post.title%>' disabled='disabled'/>
+        <div class="tag-content">
+            <label for="">标签</label><br/>
+            <input type="text" id="tag1" class="tags" value='<%=post.tags[0]%>' disabled='disabled'/><input type="text" id="tag2" class="tags" value='<%=post.tags[1]%>' disabled='disabled'/><input type="text" id="tag3" class="tags" value='<%=post.tags[2]%>' disabled='disabled'/>
+        </div>
+        <div class="blog-text">
+            <label for="">正文</label><br/>
+            <textarea name='post' cols='80' rows='15' id="editblog"><%=post.post%></textarea>
+        </div>
+        <div id="edit" data-day="<%=post.time.day%>" data-title="<%=post.title%>">保存修改</div>
+    </div>
+</div>
+<% include footer %>

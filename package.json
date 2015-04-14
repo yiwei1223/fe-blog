@@ -1,0 +1,19 @@
+{
+    "name": "blog",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express": "*",
+        "body-parser": "*",
+        "cookie-parser": "*",
+        "ejs": "*",
+        "mongoose": "*",
+        "markdown": "*",
+        "multer": "*",
+        "cookie-session": "*"
+    },
+    "description": "this is use node.js, express and NoSQL set up blog"
+}

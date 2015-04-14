@@ -1,0 +1,43 @@
+<% include header %>
+<div class="article">
+    <div class="article-head">
+        <div class="article-head-content">
+            <h3 id="blog-title"><%=post.title %></h3>
+            <ul class="blog_ul">
+                <% if (post.tags.length !== 0) { %>
+                    <% post.tags.forEach(function (tag, index) { %>
+                        <li class="tag"><a href="/tags/<%=tag%>"><%=tag%></a></li>
+                    <% }) %>
+                <% } else { %>
+                    <li class="tag">无标签</li>
+                <% } %>
+                <li class="man">
+                    <div class="litter_icon_man" title="作者"></div>
+                    <div class="litter_num"><a href="/u/<%=post.name%>"><%=post.name%></a></div>
+                </li>
+                <li class="see">
+                    <div class="litter_icon_see" title="查看"></div>
+                    <div class="litter_num"><%=post.pv%></div>
+                </li>
+                <li class="collection">
+                    <div class="litter_icon_collection" title="关注"></div>
+                    <div class="litter_num"><%=post.care%></div>
+                </li>
+                <li class="reprinted">
+                    <div class="litter_icon_reprinted" title="转发"></div>
+                    <div class="litter_num">0</div>
+                </li>
+                <li class="posttime" title="发布时间"><%=post.time.minute%></li>
+                <% if (user && (user.name === post.name)) { %>
+                    <li class="edit user-edit"><a href='/edit/<%=post.name%>/<%=post.time.day%>/<%=post.title %>'>编辑</a></li>
+                    <li class="edit"><a href='/remove/<%=post.name%>/<%=post.time.day%>/<%=post.title%>'>删除</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+    <div class="article-content">
+        <%- post.post%>
+    </div>
+</div>
+<% include comment %>
+<% include footer %>

@@ -1,0 +1,29 @@
+<div class="page">
+    <div class="page-content">
+        <% if (!isFirstPage) { %>
+            <a class="prev_on prev" href='?p=<%=page-1%>' title='上一页'></a>
+        <% }else { %>
+            <span class="prev_on prev" id="prev"></span>
+        <% } %>
+        <span class="pages">
+            <span id="currentPage"><%=page%></span>
+            <span>/</span>
+            <span id="sumPages"><%=total%></span>
+        </span>
+        <% if (!isLastPage) { %>
+            <a class="next next_on" href='?p=<%=page+1%>' title='下一页'></a>
+        <% }else { %>
+            <span class="next next_on" id="next"></span>
+        <% } %>
+        <span class="input_page">
+            <% if (total == 1) { %>
+                <input type="text" id="page" disabled>
+            <% } else {%>
+                <input type="text" id="page">
+            <% } %>
+        </span>
+        <span class="go" data-pages="<%=total%>" data-currentPage="<%=page%>">
+            <span>GO</span>
+        </span>
+    </div>
+</div>
