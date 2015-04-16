@@ -7,7 +7,9 @@ var User = require('../models/user'),
     Comment = require('../models/comment'),
     fs = require('fs'),
     util = require('util'),
-    tool = require('../tool/time');
+    tool = require('../tool/time'),
+    formidable = require('formidable'),
+    path = require('path');
 
 module.exports = function (app) {
     /**
@@ -304,6 +306,183 @@ module.exports = function (app) {
                 user: req.session.user,
                 posts: blogs,
                 _tag: req.params.tag
+            });
+        });
+    });
+
+
+    /**
+     * @desc 文件检索路由
+     */
+    app.get('/search', function (req, res, next) {
+        Blog.search(req.query.keyword, function (err, blogs) {
+            if (err) {
+                return res.redirect('/');
+            }
+            res.render('search', {
+                posts: blogs,
+                user: req.session.user
+            });
+        });
+    });
+
+    /**
+     * @desc 访问用户页面router
+     */
+    app.get('/u/:name', function (req, res, next) {
+        User.findByName(req.params.name, function (err, user) {
+            if (!user) { //用户不存在
+                res.render('user', {
+                    _user: user,
+                    user: req.session.user
+                });
+            } else {
+                var
+                    blogs = 0,
+                    comments = 0;
+                Blog.countByUser(user.name, function (err, count) {
+                    if (!err) {
+                        blogs = count;
+                        Comment.countCommentsByUser(user.name, function (err, count) {
+                            if (!err) {
+                                comments = count;
+                                res.render('user', {
+                                    user: req.session.user,
+                                    _user: user,
+                                    blogs: blogs,
+                                    comments: comments
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    /**
+     * @desc 访问用户页面router
+     */
+    app.get('/myinfo', function (req, res, next) {
+        User.findByName(req.session.user.name, function (err, user) {
+            if (!user) { //用户不存在
+                res.render('user', {
+                    _user: user,
+                    user: req.session.user
+                });
+            } else {
+                var
+                    blogs = 0,
+                    comments = 0;
+                Blog.countByUser(user.name, function (err, count) {
+                    if (!err) {
+                        blogs = count;
+                        Comment.countCommentsByUser(user.name, function (err, count) {
+                            if (!err) {
+                                comments = count;
+                                res.render('user', {
+                                    user: req.session.user,
+                                    _user: user,
+                                    blogs: blogs,
+                                    comments: comments
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    /**
+     * @desc 修改用户信息页面router
+     */
+    app.get('/u/edit/:name', function (req, res, next) {
+        User.findByName(req.params.name, function (err, user) {
+            if (err)
+                return res.redirect('back');
+            res.render('edituser', {
+                user: req.session.user,
+                name: user.name,
+                head: user.head,
+                motto: user.motto,
+                sex: user.sex,
+                address: user.address,
+                QQ: user.QQ,
+                work: user.work
+            });
+        });
+    });
+
+    /**
+     * @desc 修改用户信息router
+     */
+    app.post('/edituserinfo', function (req, res, next) {
+        User.modify({
+            name: req.session.user.name,
+            motto: req.body.motto,
+            sex: req.body.sex,
+            address: req.body.address,
+            QQ: req.body.QQ,
+            work: req.body.work,
+            head: req.body.head
+        }, function (err) {
+            var url = 'u/' + req.session.user.name;
+            if (err) {
+                res.json(util.format('%j', {
+                    code: 400,
+                    msg: '修改失败！'
+                }));
+            } else {
+                res.json(util.format('%j', {
+                    code: 200,
+                    msg: '修改成功',
+                    url: url
+                }));
+            }
+        });
+    });
+
+    /**
+     * @desc 图片上传路由
+     */
+    app.post('/upload', function (req, res, next) {
+        var form = new formidable.IncomingForm(), //创建上传表单
+            dirname = __dirname;
+        form.encoding = 'utf-8'; //设置编辑
+        form.uploadDir = './public/image/'; //设置上传目录
+        form.keepExtensions = true; //保留后缀
+        form.maxFieldsSize = 2 * 1024 * 1024; //文件大小
+        form.parse(req, function(err, fields, files) {
+            if (err) {
+                return;
+            }
+            var extName = '';  //后缀名
+            switch (files.icon.type) {
+                case 'image/pjpeg':
+                    extName = 'jpg';
+                    break;
+                case 'image/jpeg':
+                    extName = 'jpg';
+                    break;
+                case 'image/png':
+                    extName = 'png';
+                    break;
+                case 'image/x-png':
+                    extName = 'png';
+                    break;
+            }
+
+            var avatarName = Math.random() + '.' + extName;
+            var newPath = form.uploadDir + avatarName;
+            fs.renameSync(files.icon.path, newPath);  //重命名
+            User.updateIcon(req.session.user.name, '/image/' + avatarName, function (err) {
+                Blog.modifyIconByUserName(req.session.user.name, '/image/' + avatarName, function (err) {
+                    /*Comment.modifyIconByUserName(req.session.user.name, '/image/' + avatarName, function (err) {
+                        res.redirect('back');
+                    });*/
+                    res.redirect('back');
+                });
             });
         });
     });

@@ -23,6 +23,7 @@ var db = require('./db'),
             reprint_from: {},
             reprint_to: []
         },
+        reprint_infos: Number,//转发量
         pv: Number,
         care: Number//关注数
     }),
@@ -256,5 +257,60 @@ Blog.getBlogsByTag = function (tag, callback) {
             return callback(err);
         }
         callback(null, blogs);
+    });
+};
+
+/**
+ * @desc 模糊查询
+ * @param keyword
+ * @param callback
+ */
+Blog.search = function (keyword, callback) {
+    var pattern = new RegExp('^.*' + keyword + '.*$', 'i');
+    Post.find({
+        title: pattern
+    })
+    .sort({time: -1})
+    .exec(function (err, blogs) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, blogs);
+    });
+};
+
+/**
+ * @desc 统计每个user的博客总数
+ * @param name
+ * @param callback
+ */
+Blog.countByUser = function (name, callback) {
+    Post.count({
+        "name": name
+    }, function (err, count) {
+        if (err)
+            return callback(err);
+        callback(null, count);
+    });
+};
+
+/**
+ * @desc 修改博客主的头像
+ * @param name
+ * @param icon
+ * @param callback
+ */
+Blog.modifyIconByUserName = function (name, icon, callback) {
+    Post.findOneAndUpdate({
+        "name": name
+    }, {
+        $set: {
+            head: icon
+        }
+    }, function (err) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null);
     });
 };

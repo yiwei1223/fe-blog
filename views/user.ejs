@@ -1,0 +1,61 @@
+<% include header %>
+<div class="myinfo-warp">
+    <% if (user && _user) {%>
+        <h3 class="bloger-head">
+            <span class="bloger-name"><%=_user.name%>的个人主页</span>
+        </h3>
+        <div class="bloger-content">
+            <div class="bloger-img-warp">
+                <%if (_user.head != "") {%>
+                    <img src="<%=_user.head%>" alt="" class="bloger-icon"/>
+                <% } else { %>
+                    <img src="/image/icon.jpg" alt="" class="bloger-icon"/>
+                <% } %>
+            </div>
+            <div class="bloger-content-warp">
+                <%if (_user.motto) {%>
+                    <p class="motto">座右铭：<%=_user.motto%></p>
+                <% } else { %>
+                    <p class="motto">座右铭：未填写！</p>
+                <% } %>
+                <%if (_user.sex) {%>
+                    <p class="sex">性别：<%=_user.sex%></p>
+                <% } else { %>
+                    <p class="sex">性别：未知！</p>
+                <% } %>
+                <%if (_user.address) {%>
+                    <p class="myhome">居住地：<%=_user.address%></p>
+                <% } else { %>
+                    <p class="myhome">居住地：地球！</p>
+                <% } %>
+                <%if (_user.QQ) {%>
+                    <p class="qq">QQ：<%=_user.QQ%></p>
+                <% } else { %>
+                    <p class="qq">QQ：未填写！</p>
+                <% } %>
+                <%if (_user.work) {%>
+                    <p class="work">工作：<%=_user.work%></p>
+                <% } else { %>
+                    <p class="work">工作：未填写！</p>
+                <% } %>
+                <%if (_user.name == user.name) {%>
+                    <p class="modify-info"><a href="/u/edit/<%=user.name%>">修改</a></p>
+                <% } %>
+            </div>
+        </div>
+        <div class="bloger-footer">
+            <span class="bloger-footer-msg">
+                <%if (_user.name == user.name) {%>
+                    我
+                <% } else { %>
+                    TA
+                <% } %>
+                参与的：</span>
+            <span class="bloger-footer-desc">博客</span><span class="bloger-footer-num"><%=blogs%></span>
+            <span class="bloger-footer-desc">评论</span><span class="bloger-footer-num"><%=comments%></span>
+            <span class="bloger-footer-desc">关注</span><span class="bloger-footer-num">5</span>
+            <span class="bloger-footer-desc">转发</span><span class="bloger-footer-num">3</span>
+        </div>
+    <%}%>
+</div>
+<% include footer %>

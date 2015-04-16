@@ -12,7 +12,12 @@ var db = require('./db'),
     userSchema = new Schema({
         name: {type: String, unique: true},
         password: String,
-        head: String
+        head: String,
+        motto: String,
+        sex: String,
+        address: String,
+        QQ: String,
+        work: String
     }),
     UserModel = db.model('User', userSchema);
 
@@ -34,17 +39,18 @@ User.prototype.save = function (callback) {
     var user = {
         name: this.name,
         password: this.password,
-        head: ''
+        head: '',
+        motto: '',
+        sex: '',
+        address: '',
+        QQ: '',
+        work: ''
     };
 
     /**
      * @desc 向数据库注入数据
      */
-    UserModel({
-        name: user.name,
-        password: user.password,
-        head: user.head
-    }).save(function (err) {
+    UserModel(user).save(function (err) {
         if (err) {
             return callback(err);
         } else {
@@ -67,6 +73,49 @@ User.findByName = function (name, callback) {
         }
     });
 };
+
+/**
+ * @desc 修改用户个人信息
+ * @param user
+ * @param callback
+ */
+User.modify = function (user, callback) {
+    UserModel.findOneAndUpdate({
+        "name": user.name
+    }, {
+        $set: {
+            sex: user.sex,
+            motto: user.motto,
+            address: user.address,
+            QQ: user.QQ,
+            work: user.work
+        }
+    }, function (err) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null);
+    });
+};
+
+/**
+ * @desc 更新头像
+ */
+User.updateIcon = function (name, icon, callback) {
+    UserModel.findOneAndUpdate({
+        "name": name
+    }, {
+        $set: {
+            head: icon
+        }
+    }, function (err) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null);
+    });
+};
+
 
 /**
  * @desc 拦截器,判断用户是否登录

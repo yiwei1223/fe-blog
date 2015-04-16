@@ -9,8 +9,10 @@
         <div class="container">
             <div class="header">
                 <div class="search">
-                    <input type="text" id="keyword" placeholder="请输入文章名称"/>
-                    <div id="search">搜索</div>
+                    <form action="">
+                        <input type="text" id="keyword" placeholder="请输入文章名称"/>
+                        <input id="search" type="submit" value="搜索">
+                    </form>
                 </div>
                 <div class="nav">
                     <ul class="nav_ul">
@@ -208,6 +210,77 @@
                     <div class="npm"></div>
                 </div>
             </div>-->
+        <!--<div class="myinfo-warp">
+            <h3 class="bloger-head">
+                <span class="bloger-name">易伟的个人主页</span>
+            </h3>
+            <div class="bloger-content">
+                <div class="bloger-img-warp">
+                    <img src="../public/image/icon.jpg" alt="" class="bloger-icon"/>
+                </div>
+                <div class="bloger-content-warp">
+                    <p class="motto">座右铭：做一个好前端！</p>
+                    <p class="sex">性别：男</p>
+                    <p class="myhome">居住地：北京</p>
+                    <p class="qq">QQ：23242424</p>
+                    <p class="work">工作：FE</p>
+                    <p class="modify-info">修改</p>
+                </div>
+            </div>
+            <div class="bloger-footer">
+                <span class="bloger-footer-msg">我参与的：</span>
+                <span class="bloger-footer-desc">博客</span><span class="bloger-footer-num">3</span>
+                <span class="bloger-footer-desc">评论</span><span class="bloger-footer-num">4</span>
+                <span class="bloger-footer-desc">关注</span><span class="bloger-footer-num">5</span>
+                <span class="bloger-footer-desc">转发</span><span class="bloger-footer-num">3</span>
+            </div>
+        </div>-->
+        <div class="edit-myinfo-warp">
+            <h3 class="bloger-head edit-info-head">
+                <span class="bloger-name">易伟：编辑个人资料</span>
+            </h3>
+            <div class="bloger-content edit-img-head">
+                <div class="edit-info-img-warp">
+                    <span class="icom-msg">头像</span>
+                    <img src="../public/image/icon.jpg" alt="" class="old-icon"/>
+                    <div class="select-icon">选择头像</div>
+                </div>
+            </div>
+            <div class="bloger-content edit-img-head">
+                <div class="edit-info-img-warp">
+                    <span class="icom-msg">性别</span>
+                    <input type="radio" name="sex" value="female" checked/>男
+                    <input type="radio" name="sex" value="Female"/>女
+                </div>
+            </div>
+            <div class="bloger-content edit-img-head">
+                <div class="edit-info-img-warp">
+                    <span class="icom-msg">座右铭</span>
+                    <input type="text" id="motto"/>
+                </div>
+            </div>
+            <div class="bloger-content edit-img-head">
+                <div class="edit-info-img-warp">
+                    <span class="icom-msg">居住地</span>
+                    <input type="text" id="address"/>
+                </div>
+            </div>
+            <div class="bloger-content edit-img-head">
+                <div class="edit-info-img-warp">
+                    <span class="icom-msg">QQ</span>
+                    <input type="text" id="QQ"/>
+                </div>
+            </div>
+            <div class="bloger-content edit-img-head">
+                <div class="edit-info-img-warp">
+                    <span class="icom-msg">工作</span>
+                    <input type="text" id="work"/>
+                </div>
+            </div>
+            <div class="bloger-content edit-img-head" style="border-bottom: 0">
+                <div id="save-edit">保存修改</div>
+            </div>
+        </div>
         </div>
         <script type="text/javascript" src="../public/js/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="../public/js/index.js"></script>

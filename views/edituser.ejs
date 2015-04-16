@@ -1,0 +1,66 @@
+<% include header %>
+<div class="edit-myinfo-warp">
+    <h3 class="bloger-head edit-info-head">
+        <span class="bloger-name"><%=name%>：编辑个人资料</span>
+    </h3>
+    <div class="bloger-content edit-img-head">
+        <div class="edit-info-img-warp">
+            <span class="icom-msg">头像</span>
+            <%if (head != "") {%>
+                <img src="<%=head%>" alt="" class="old-icon"/>
+            <% } else { %>
+                <img src="/image/icon.jpg" alt="" class="old-icon"/>
+            <% } %>
+            <form action="/upload" method='POST' enctype='multipart/form-data'>
+                <div class="select-icon">
+                    <input type="file" name="icon" class="unload-file"/>
+                    <span class="upload-msg">选择头像</span>
+                </div>
+                <input class="select-icon" style="margin-left: 20px; outline: 0" type="submit" value="上传头像">
+            </form>
+        </div>
+    </div>
+    <div class="bloger-content edit-img-head">
+        <div class="edit-info-img-warp">
+            <span class="icom-msg">性别</span>
+            <%if (sex == '男') {%>
+                <input type="radio" name="sex" value="男" checked/>男
+                <input type="radio" name="sex" value="女"/>女
+            <% } else if (sex == '女') {%>
+                <input type="radio" name="sex" value="男"/>男
+                <input type="radio" name="sex" value="女" checked/>女
+            <% } else {%>
+                <input type="radio" name="sex" value="男"/>男
+                <input type="radio" name="sex" value="女"/>女
+            <% } %>
+        </div>
+    </div>
+    <div class="bloger-content edit-img-head">
+        <div class="edit-info-img-warp">
+            <span class="icom-msg">座右铭</span>
+            <input type="text" id="motto" value="<%=motto%>"/>
+        </div>
+    </div>
+    <div class="bloger-content edit-img-head">
+        <div class="edit-info-img-warp">
+            <span class="icom-msg">居住地</span>
+            <input type="text" id="address" value="<%=address%>"/>
+        </div>
+    </div>
+    <div class="bloger-content edit-img-head">
+        <div class="edit-info-img-warp">
+            <span class="icom-msg">QQ</span>
+            <input type="text" id="QQ" value="<%=QQ%>"/>
+        </div>
+    </div>
+    <div class="bloger-content edit-img-head">
+        <div class="edit-info-img-warp">
+            <span class="icom-msg">工作</span>
+            <input type="text" id="work" value="<%=work%>"/>
+        </div>
+    </div>
+    <div class="bloger-content edit-img-head" style="border-bottom: 0">
+        <div id="save-edit">保存修改</div>
+    </div>
+</div>
+<% include footer %>

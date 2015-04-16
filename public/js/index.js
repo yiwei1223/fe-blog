@@ -318,4 +318,42 @@ $(function () {
             }
         });
     });
+
+    /* 修改个人信息 */
+    $('#save-edit').on('click', function () {
+        $.ajax({
+            url: '/edituserinfo',
+            type: 'POST',
+            data: {
+                head: '',
+                sex: $('input[name="sex"]:checked').val(),
+                motto: $('#motto').val(),
+                address: $('#address').val(),
+                QQ: $('#QQ').val(),
+                work: $('#work').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                var result = JSON.parse(data);
+                if (result['code'] == 400) {
+                    $('.alert').html(result['msg']).addClass('error').css({
+                        'display': 'block',
+                        'transition': 'all .5s linear'
+                    });
+                    setTimeout(function () {
+                        $('.alert').removeClass('error').html('').css('display', 'none');
+                    }, 1000);
+                } else {
+                    $('.alert').html(result['msg']).addClass('success').css({
+                        'display': 'block',
+                        'transition': 'all .5s linear'
+                    });
+                    setTimeout(function () {
+                        $('.alert').removeClass('success').html('').css('display', 'none');
+                        window.location = 'http://localhost:3000/' + result['url'];
+                    }, 1000);
+                }
+            }
+        });
+    });
 });

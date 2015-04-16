@@ -31,11 +31,10 @@ app.set('views', path.join(__dirname, 'views'));//视图资源地址
 app.use(express.static(path.join(__dirname, 'public')));//挂载静态资源
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(multer()); // for parsing multipart/form-data
+/*app.use(multer()); // for parsing multipart/form-data*/
 app.use(session({
     keys: ['user', 'blog']
 }));
-
 /**
  * @desc 使用路由
  */

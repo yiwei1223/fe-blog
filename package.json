@@ -13,7 +13,8 @@
         "mongoose": "*",
         "markdown": "*",
         "multer": "*",
-        "cookie-session": "*"
+        "cookie-session": "*",
+        "formidable": "latest"
     },
     "description": "this is use node.js, express and NoSQL set up blog"
 }

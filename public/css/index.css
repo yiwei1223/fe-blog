@@ -60,14 +60,18 @@ a {
     margin-right: 100px;
 }
 
-#keyword, #search {
+/*#keyword, #search {
     float: left;
+}*/
+.search form {
+    height: 100%;
 }
+
 
 #keyword {
     width: 68%;
     height: 60%;
-    margin: 12px 5%;
+    margin: 0 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
@@ -83,7 +87,9 @@ a {
     text-align: center;
     color: #fff;
     cursor: pointer;
-    margin-top: 12px;
+    margin-top: 10px;
+    /* outline: 0; */
+    border: none;
 }
 
 .nav ul {
@@ -95,7 +101,7 @@ a {
 .nav_ul li {
     float: left;
     height: 100%;
-    width: 70px;
+    width: 80px;
 }
 
 .nav_ul li a{
@@ -780,4 +786,172 @@ a {
 .mongodb img{
     width: 20%;
     height: 100%;
+}
+
+.myinfo-warp, .edit-myinfo-warp {
+    width: 60%;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.bloger-head {
+    width: 90%;
+    padding: 20px 5%;
+    border-bottom: 1px dotted #ccc;
+}
+
+.bloger-name {
+    font: 1.5rem '微软雅黑';
+    color: rgba(0, 0, 0, .8);
+}
+
+.bloger-content {
+    border-bottom: 1px dotted #ccc;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.bloger-icon {
+    margin-left: 40px;
+}
+
+.bloger-footer {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.bloger-footer-msg {
+    color: #0099CC;
+    margin-left: 40px;
+}
+
+.bloger-footer-desc {
+    margin: 0 10px 0 10px;
+    color: #1B76CD;
+}
+
+.bloger-footer-num {
+    color: #22CB22;
+}
+
+.bloger-content::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.bloger-content-warp, .bloger-img-warp {
+    float: left;
+}
+
+.bloger-content-warp {
+    margin-left: 120px;
+}
+
+.bloger-img-warp {
+    height: 200px;
+    padding: 60px 0;
+}
+
+.bloger-content-warp p {
+    color: #0099CC;
+}
+
+.modify-info {
+    margin-left: 200px;
+    background: #E5752C;
+    width: 80px;
+    height: 35px;
+    font: 1rem/35px '微软雅黑';
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.modify-info a {
+    color: #fff !important;
+}
+
+.edit-info-head {
+    border-bottom: 1px dotted #00CCCC !important;
+}
+
+.edit-info-img-warp {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.icom-msg {
+    display: block;
+    float: left;
+    margin-right: 20px;
+    color: #393939;
+    width: 50px;
+}
+
+.old-icon {
+    display: block;
+    float: left;
+    margin-right: 30px;
+    border-radius: 10px;
+}
+
+.select-icon {
+    float: left;
+    width: 100px;
+    height: 40px;
+    border: 0;
+    background: #00CC66;
+    text-align: center;
+    color: #fff;
+    font: 1rem/40px '微软雅黑';
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.edit-img-head {
+    border-bottom: 1px dotted #00CCCC;
+}
+
+#motto, #address, #QQ, #work {
+    width: 300px;
+    border: 1px dotted #FF3300;
+    outline: 0;
+    height: 35px;
+    border-radius: 10px;
+    text-indent: 15px;
+}
+
+#save-edit {
+    width: 200px;
+    margin: 0 auto;
+    text-align: center;
+    height: 40px;
+    background: #00CC66;
+    color: #fff;
+    font: 1.1rem/40px '微软雅黑';
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.unload-file {
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.upload-msg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+    z-index: 9;
 }

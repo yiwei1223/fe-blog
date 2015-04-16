@@ -9,8 +9,10 @@
     <div class="container">
         <div class="header">
             <div class="search">
-                <input type="text" id="keyword" placeholder="请输入文章名称"/>
-                <div id="search">搜索</div>
+                <form action="/search" method="get">
+                    <input type="text" id="keyword" placeholder="请输入文章名称" name="keyword"/>
+                    <input id="search" type="submit" value="搜索">
+                </form>
             </div>
             <div class="nav">
                 <ul class="nav_ul">
@@ -20,7 +22,7 @@
                     <li><a href="/links">友情链接</a></li>
                     <% if (user) { %>
                         <li><a href="/myblog">我的博客</a></li>
-                        <li><a href="/upload">上传</a></li>
+                        <li><a href="/myinfo">我的信息</a></li>
                         <li><a href="/post">发表</a></li>
                         <li><a href="/logout">退出</a></li>
                     <%} else {%>
