@@ -4,6 +4,7 @@
  */
 
 var db = require('./db'),
+    User = require('../models/user'),
     Schema = db.Schema,
     BlogSchema = new Schema({
         name: String,
@@ -19,13 +20,9 @@ var db = require('./db'),
         tags: [],
         post: String,
         comments: [],
-        reprint_info: {
-            reprint_from: {},
-            reprint_to: []
-        },
-        reprint_infos: Number,//转发量
+        reprint: Number, //转发
         pv: Number,
-        care: Number//关注数
+        care: Number//关注
     }),
     Post = db.model('Post', BlogSchema),
     tool = require('../tool/time');//调用工具类
@@ -65,7 +62,8 @@ Blog.prototype.publish = function (callback) {
         },
         comments: [],
         pv: 0,
-        care: 0
+        care: 0,
+        reprint: 0
     };
     Post(_post).save(function (err) {
         if (err)
@@ -82,6 +80,7 @@ Blog.prototype.publish = function (callback) {
  * @desc 按页加载Blog
  */
 Blog.getBlogs = function (name, page, callback) {
+    var myblog = [];
     if (!name) {
         Post.count(null, function (err, count) {
             var query = Post.find(null, null, {
@@ -116,14 +115,72 @@ Blog.getBlogs = function (name, page, callback) {
                     return callback(err);
                 }
                 //解析markdown为html
-                /*var results = blogs.map(function (blog) {
-                    blog.post = markdown.toHTML(blog.post);
-                    return blog;
-                });*/
+                /* var results = blogs.map(function (blog) {
+                 blog.post = markdown.toHTML(blog.post);
+                 return blog;
+                 });*/
                 callback(null, blogs, count);
             });
         });
     }
+};
+
+/**
+ * @method getBlogs
+ * @param name
+ * @param callback
+ * @desc 按页加载Blog
+ */
+Blog.getMyCare = function (name, callback) {
+    var myblog = [];
+    User.User.countCareByUser(name, function (err, user) {
+        if (!err) {
+            var care = user.care;
+            care.forEach(function (item, index) {
+                Post.findOne({
+                    "name": item.name,
+                    "time.day": item.day,
+                    "title": item.title
+                }, function (err, blog) {
+                    if (!err) {
+                        myblog.push(blog);
+                    }
+                });
+            });
+        }
+    });
+    setTimeout(function () {
+        callback(null, myblog);
+    }, 2000);
+};
+
+/**
+ * @method getBlogs
+ * @param name
+ * @param callback
+ * @desc 按页加载Blog
+ */
+Blog.getMyReprint = function (name, callback) {
+    var myblog = [];
+    User.User.countCareByUser(name, function (err, user) {
+        if (!err) {
+            var reprint = user.reprint;
+            reprint.forEach(function (item, index) {
+                Post.findOne({
+                    "name": item.name,
+                    "time.day": item.day,
+                    "title": item.title
+                }, function (err, blog) {
+                    if (!err) {
+                        myblog.push(blog);
+                    }
+                });
+            });
+        }
+    });
+    setTimeout(function () {
+        callback(null, myblog);
+    }, 2000);
 };
 
 /**

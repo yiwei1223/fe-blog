@@ -27,12 +27,20 @@
                         <div class="litter_num"><%=post.pv%></div>
                     </li>
                     <li class="collection">
-                        <div class="litter_icon_collection" title="关注"></div>
+                        <% if (user) {%>
+                            <div class="litter_icon_collection care-icon" title="关注" data-user="<%=user.name%>" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                        <% } else {%>
+                            <div class="litter_icon_collection care-icon" title="关注" data-user="" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                        <% } %>
                         <div class="litter_num"><%=post.care%></div>
                     </li>
                     <li class="reprinted">
-                        <div class="litter_icon_reprinted" title="转发"></div>
-                        <div class="litter_num">0</div>
+                        <% if (user) {%>
+                            <div class="litter_icon_reprinted reprinted-icon" title="转发" data-user="<%=user.name%>" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                        <% } else {%>
+                            <div class="litter_icon_reprinted reprinted-icon" title="转发" data-user="" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                        <% } %>
+                        <div class="litter_num"><%=post.reprint%></div>
                     </li>
                     <li class="posttime" title="发布时间"><%=post.time.minute%></li>
                 </ul>

@@ -94,7 +94,7 @@ $(function () {
 
     $('.repeat-pwd').on('blur', function () {
         if ($(this).val() != $('.password').val()) {
-            $('.alert').html('密码不一致').addClass('error').css({
+            $('.alert').html('两次密码不一致').addClass('error').css({
                 'display': 'block',
                 'transition': 'all .5s linear'
             });
@@ -131,8 +131,8 @@ $(function () {
                         'transition': 'all .5s linear'
                     });
                     setTimeout(function () {
-                        $('.alert').removeClass('success').html('').css('display', 'none');
-                        window.location.href = 'http://localhost:3000/';
+                       $('.alert').removeClass('success').html('').css('display', 'none');
+                       window.location.href = 'http://localhost:3000/';
                     }, 1000);
                 }
             }
@@ -355,5 +355,205 @@ $(function () {
                 }
             }
         });
+    });
+
+    /* 关注 */
+    $('.care-icon').on('click', function () {
+        if ($(this).attr('data-user') == "") {//未登录
+            $('.alert').html('请先登录吧！').addClass('error').css({
+                'display': 'block',
+                'transition': 'all .5s linear'
+            });
+            setTimeout(function () {
+                $('.alert').removeClass('error').html('').css('display', 'none');
+                window.location = 'http://localhost:3000/login';
+            }, 1000);
+        } else if ($(this).attr('data-user') == $(this).attr('data-name')) {//自己不能关注自己
+            $('.alert').html('自己不能关注自己哟！！').addClass('error').css({
+                'display': 'block',
+                'transition': 'all .5s linear'
+            });
+            setTimeout(function () {
+                $('.alert').removeClass('error').html('').css('display', 'none');
+            }, 1000);
+        } else {
+            $.ajax({
+                url: '/care',
+                type: 'POST',
+                data: {
+                    name: $(this).attr('data-name'),
+                    day: $(this).attr('data-day'),
+                    title: $(this).attr('data-title')
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result['code'] == 400) {
+                        $('.alert').html(result['msg']).addClass('error').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('error').html('').css('display', 'none');
+                        }, 1000);
+                    } else {
+                        $('.alert').html(result['msg']).addClass('success').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('success').html('').css('display', 'none');
+                            window.location = window.location.href;
+                        }, 1000);
+                    }
+                }
+            });
+        }
+    });
+
+    /* 转发 */
+    $('.reprinted-icon').on('click', function () {
+        if ($(this).attr('data-user') == "") {//未登录
+            $('.alert').html('请先登录吧！').addClass('error').css({
+                'display': 'block',
+                'transition': 'all .5s linear'
+            });
+            setTimeout(function () {
+                $('.alert').removeClass('error').html('').css('display', 'none');
+                window.location = 'http://localhost:3000/login';
+            }, 1000);
+        } else if ($(this).attr('data-user') == $(this).attr('data-name')) {//自己不能转发自己
+            $('.alert').html('不能转发自己的文章哟！！').addClass('error').css({
+                'display': 'block',
+                'transition': 'all .5s linear'
+            });
+            setTimeout(function () {
+                $('.alert').removeClass('error').html('').css('display', 'none');
+            }, 1000);
+        } else {
+            $.ajax({
+                url: '/reprint',
+                type: 'POST',
+                data: {
+                    name: $(this).attr('data-name'),
+                    day: $(this).attr('data-day'),
+                    title: $(this).attr('data-title')
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result['code'] == 400) {
+                        $('.alert').html(result['msg']).addClass('error').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('error').html('').css('display', 'none');
+                        }, 1000);
+                    } else {
+                        $('.alert').html(result['msg']).addClass('success').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('success').html('').css('display', 'none');
+                            window.location = window.location.href;
+                        }, 1000);
+                    }
+                }
+            });
+        }
+    });
+
+    /* 撤销关注 */
+    $('.litter_icon_collectioned').on('click', function () {
+        if ($(this).attr('data-user') == "") {//未登录
+            $('.alert').html('请先登录吧！').addClass('error').css({
+                'display': 'block',
+                'transition': 'all .5s linear'
+            });
+            setTimeout(function () {
+                $('.alert').removeClass('error').html('').css('display', 'none');
+                window.location = 'http://localhost:3000/login';
+            }, 1000);
+        } else {
+            $.ajax({
+                url: '/removecare',
+                type: 'POST',
+                data: {
+                    name: $(this).attr('data-name'),
+                    day: $(this).attr('data-day'),
+                    title: $(this).attr('data-title')
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result['code'] == 400) {
+                        $('.alert').html(result['msg']).addClass('error').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('error').html('').css('display', 'none');
+                        }, 1000);
+                    } else {
+                        $('.alert').html(result['msg']).addClass('success').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('success').html('').css('display', 'none');
+                            window.location = window.location.href;
+                        }, 1000);
+                    }
+                }
+            });
+        }
+    });
+
+    /* 撤销转发 */
+    $('.reted').on('click', function () {
+        if ($(this).attr('data-user') == "") {//未登录
+            $('.alert').html('请先登录吧！').addClass('error').css({
+                'display': 'block',
+                'transition': 'all .5s linear'
+            });
+            setTimeout(function () {
+                $('.alert').removeClass('error').html('').css('display', 'none');
+                window.location = 'http://localhost:3000/login';
+            }, 1000);
+        } else {
+            $.ajax({
+                url: '/removereprint',
+                type: 'POST',
+                data: {
+                    name: $(this).attr('data-name'),
+                    day: $(this).attr('data-day'),
+                    title: $(this).attr('data-title')
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result['code'] == 400) {
+                        $('.alert').html(result['msg']).addClass('error').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('error').html('').css('display', 'none');
+                        }, 1000);
+                    } else {
+                        $('.alert').html(result['msg']).addClass('success').css({
+                            'display': 'block',
+                            'transition': 'all .5s linear'
+                        });
+                        setTimeout(function () {
+                            $('.alert').removeClass('success').html('').css('display', 'none');
+                            window.location = window.location.href;
+                        }, 1000);
+                    }
+                }
+            });
+        }
     });
 });

@@ -17,7 +17,9 @@ var db = require('./db'),
         sex: String,
         address: String,
         QQ: String,
-        work: String
+        work: String,
+        care: [], //关注
+        reprint: [] //转发
     }),
     UserModel = db.model('User', userSchema);
 
@@ -29,7 +31,10 @@ function User(user) {
 /**
  * @desc 导出模块
  */
-module.exports = User;
+module.exports = {
+    User: User,
+    UserModel: UserModel
+};
 
 /**
  * @desc 保存用户数据方法
@@ -44,7 +49,9 @@ User.prototype.save = function (callback) {
         sex: '',
         address: '',
         QQ: '',
-        work: ''
+        work: '',
+        care: [],
+        reprint: []
     };
 
     /**
@@ -113,6 +120,22 @@ User.updateIcon = function (name, icon, callback) {
             return callback(err);
         }
         callback(null);
+    });
+};
+
+/**
+ * @desc 统计每个user的关注总数
+ * @param name
+ * @param callback
+ */
+User.countCareByUser = function (name, callback) {
+    UserModel.findOne({
+        "name": name
+    }, function (err, user) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, user);
     });
 };
 

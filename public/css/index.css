@@ -99,7 +99,7 @@ a {
 }
 
 .nav_ul li {
-    float: left;
+    float: right;
     height: 100%;
     width: 80px;
 }
@@ -214,12 +214,16 @@ a {
     height: 22px;
 }
 
-.litter_num, .posttime, .litter_num a {
+.litter_num, .posttime, .litter_num a, .care {
     margin-right: 0 !important;
     color: #33CC99;
     font-size: .9rem;
 }
 
+.care a {
+    display: inline;
+    color: goldenrod;
+}
 .litter_num {
     width: auto !important;
 }
@@ -240,7 +244,18 @@ a {
     margin-top: 3px;
 }
 
+.litter_icon_collection a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .litter_icon_collection:hover {
+    background: url(../image/fav_ico.png) 0% 0% no-repeat;
+    background-size: 203.5714285714286% auto;
+}
+
+.litter_icon_collectioned {
     background: url(../image/fav_ico.png) 0% 0% no-repeat;
     background-size: 203.5714285714286% auto;
 }
@@ -578,6 +593,12 @@ a {
     border-radius: 20px;
     text-align: center;
     cursor: pointer;
+}
+
+.delete-comment {
+    margin-right: 10px;
+    background: #f82021;
+    border: 0;
 }
 
 .bloger p {

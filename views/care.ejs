@@ -1,7 +1,7 @@
 <% include header %>
 <% if (posts) { %>
-    <div class="content">
-        <% posts.forEach(function (post, index) { %>
+<div class="content">
+    <% posts.forEach(function (post, index) { %>
         <div class="blog">
             <% if (post.head != "") { %>
                 <img src="<%=post.head%>" alt="" class="icon"/>
@@ -28,19 +28,15 @@
                     </li>
                     <li class="collection">
                         <% if (user) {%>
-                            <div class="litter_icon_collection care-icon" title="关注" data-user="<%=user.name%>" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                            <div class="litter_icon_collectioned" title="撤销关注" data-user="<%=user.name%>" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
                         <% } else {%>
-                            <div class="litter_icon_collection care-icon" title="关注" data-user="" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                            <div class="litter_icon_collectioned" title="撤销关注" data-user="" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
                         <% } %>
                         <div class="litter_num"><%=post.care%></div>
                     </li>
                     <li class="reprinted">
-                        <% if (user) {%>
-                            <div class="litter_icon_reprinted reprinted-icon" title="转发" data-user="<%=user.name%>" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
-                        <% } else {%>
-                            <div class="litter_icon_reprinted reprinted-icon" title="转发" data-user="" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
-                        <% } %>
-                        <div class="litter_num"><%=post.reprint%></div>
+                        <div class="litter_icon_reprinted" title="转发"></div>
+                        <div class="litter_num">0</div>
                     </li>
                     <li class="posttime" title="发布时间"><%=post.time.minute%></li>
                 </ul>
@@ -50,8 +46,7 @@
                 <span class="pinglun">评论</span>
             </div>
         </div>
-        <% }) %>
-    </div>
-<% include paging %>
+    <% }) %>
+</div>
 <% } %>
 <% include footer %>

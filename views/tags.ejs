@@ -1,8 +1,8 @@
 <% include header %>
 <div class="tags-warp">
 <% posts.forEach(function (post, index) { %>
-    <% if (index+1 <= 10) {%>
-        <div class="tags_<%=index+1%> _tag"><a href="/tags/<%=post%>"><%=post%></a></div>
+    <% if (index < 10) {%>
+        <div class="tags_<%=index%> _tag"><a href="/tags/<%=post%>"><%=post%></a></div>
     <% } %>
 <% }) %>
 </div>

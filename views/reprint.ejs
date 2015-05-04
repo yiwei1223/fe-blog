@@ -1,15 +1,22 @@
 <% include header %>
-<div class="article">
-    <div class="article-head">
-        <div class="article-head-content">
-            <h3 id="blog-title"><%=post.title %></h3>
+<% if (posts) { %>
+<div class="content">
+    <% posts.forEach(function (post, index) { %>
+    <div class="blog">
+        <% if (post.head != "") { %>
+        <img src="<%=post.head%>" alt="" class="icon"/>
+        <% } else {%>
+        <img src="/image/icon.jpg" alt="" class="icon"/>
+        <% } %>
+        <div class="blog_info">
+            <h3 class="blog_name"><a href="/u/<%=post.name%>/<%=post.time.day%>/<%=post.title%>"><%=post.title%></a></h3>
             <ul class="blog_ul">
                 <% if (post.tags.length !== 0) { %>
-                    <% post.tags.forEach(function (tag, index) { %>
-                        <li class="tag"><a href="/tags/<%=tag%>"><%=tag%></a></li>
-                    <% }) %>
+                <% post.tags.forEach(function (tag, index) { %>
+                <li class="tag"><a href="/tags/<%=tag%>"><%=tag%></a></li>
+                <% }) %>
                 <% } else { %>
-                    <li class="tag">无标签</li>
+                <li class="tag">无标签</li>
                 <% } %>
                 <li class="man">
                     <div class="litter_icon_man" title="作者"></div>
@@ -29,23 +36,21 @@
                 </li>
                 <li class="reprinted">
                     <% if (user) {%>
-                        <div class="litter_icon_reprinted reprinted-icon" title="转发" data-user="<%=user.name%>" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                        <div class="litter_icon_reprinted reted" title="撤销转发" data-user="<%=user.name%>" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
                     <% } else {%>
-                        <div class="litter_icon_reprinted reprinted-icon" title="转发" data-user="" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
+                        <div class="litter_icon_reprinted reted" title="撤销转发" data-user="" data-name="<%=post.name%>" data-day="<%=post.time.day%>" data-title="<%=post.title%>"></div>
                     <% } %>
                     <div class="litter_num"><%=post.reprint%></div>
                 </li>
                 <li class="posttime" title="发布时间"><%=post.time.minute%></li>
-                <% if (user && (user.name === post.name)) { %>
-                    <li class="edit user-edit"><a href='/edit/<%=post.name%>/<%=post.time.day%>/<%=post.title %>'>编辑</a></li>
-                    <li class="edit"><a href='/remove/<%=post.name%>/<%=post.time.day%>/<%=post.title%>'>删除</a></li>
-                <% } %>
             </ul>
         </div>
+        <div class="comments">
+            <span class="num"><%=post.comments.length%></span>
+            <span class="pinglun">评论</span>
+        </div>
     </div>
-    <div class="article-content">
-        <%- post.post%>
-    </div>
+    <% }) %>
 </div>
-<% include comment %>
+<% } %>
 <% include footer %>

@@ -2,9 +2,11 @@
  * Created by yiwei on 2015/4/9.
  * @desc 路由配置
  */
-var User = require('../models/user'),
+var User = require('../models/user').User,
     Blog = require('../models/post').Blog,
     Comment = require('../models/comment'),
+    Care = require('../models/care'),
+    Reprint = require('../models/reprint'),
     fs = require('fs'),
     util = require('util'),
     tool = require('../tool/time'),
@@ -47,9 +49,6 @@ module.exports = function (app) {
             if (err) {
                 blogs = null;
             }
-            if (err) {
-                blogs = null;
-            }
             res.render('index', {
                 user: req.session.user,
                 posts: blogs,
@@ -58,6 +57,40 @@ module.exports = function (app) {
                 isLastPage: ((page -1) * 6 + blogs.length) === total,
                 total: (total%6 !=0) ? parseInt(total/6) + 1 : parseInt(total/6)
             });
+        });
+    });
+
+    /**
+     * @desc 获取自己关注的博客列表
+     */
+    app.get('/mycare', function (req, res, next) {
+        Blog.getMyCare(req.session.user.name, function (err, blogs) {
+            if (err) {
+                blogs = null;
+            }
+            setTimeout(function () {
+                res.render('care', {
+                    user: req.session.user,
+                    posts: blogs
+                });
+            }, 3000);
+        });
+    });
+
+    /**
+     * @desc 获取自己转发的博客列表
+     */
+    app.get('/myreprint', function (req, res, next) {
+        Blog.getMyReprint(req.session.user.name, function (err, blogs) {
+            if (err) {
+                blogs = null;
+            }
+            setTimeout(function () {
+                res.render('reprint', {
+                    user: req.session.user,
+                    posts: blogs
+                });
+            }, 3000);
         });
     });
 
@@ -236,6 +269,7 @@ module.exports = function (app) {
             if (err) {
                 return res.redirect('/');
             }
+            console.log(blog);
             res.render('edit', {
                 post: blog,
                 user: req.session.user
@@ -344,15 +378,21 @@ module.exports = function (app) {
                     if (!err) {
                         blogs = count;
                         Comment.countCommentsByUser(user.name, function (err, count) {
-                            if (!err) {
-                                comments = count;
-                                res.render('user', {
-                                    user: req.session.user,
-                                    _user: user,
-                                    blogs: blogs,
-                                    comments: comments
-                                });
-                            }
+                            User.countCareByUser(user.name, function (err, user) {
+                                if (!err) {
+                                    if (!err) {
+                                        comments = count;
+                                        res.render('user', {
+                                            user: req.session.user,
+                                            _user: user,
+                                            blogs: blogs,
+                                            comments: comments,
+                                            cares: user.care.length,
+                                            reprints: user.reprint.length
+                                        });
+                                    }
+                                }
+                            });
                         });
                     }
                 });
@@ -378,15 +418,21 @@ module.exports = function (app) {
                     if (!err) {
                         blogs = count;
                         Comment.countCommentsByUser(user.name, function (err, count) {
-                            if (!err) {
-                                comments = count;
-                                res.render('user', {
-                                    user: req.session.user,
-                                    _user: user,
-                                    blogs: blogs,
-                                    comments: comments
-                                });
-                            }
+                            User.countCareByUser(user.name, function (err, user) {
+                                if (!err) {
+                                    if (!err) {
+                                        comments = count;
+                                        res.render('user', {
+                                            user: req.session.user,
+                                            _user: user,
+                                            blogs: blogs,
+                                            comments: comments,
+                                            cares: user.care.length,
+                                            reprints: user.reprint.length
+                                        });
+                                    }
+                                }
+                            });
                         });
                     }
                 });
@@ -484,6 +530,120 @@ module.exports = function (app) {
                     res.redirect('back');
                 });
             });
+        });
+    });
+
+    /**
+     * @desc 关注路由
+     */
+    app.post('/care', function (req, res, next) {
+        /* 不能关注自己 */
+        if (req.session.user.nam == req.body.name) {
+            res.json(util.format('%j', {
+                code: 400,
+                msg: '不能关注自己哟！！'
+            }));
+        }
+        /* 不能重复关注 */
+
+        var care = new Care(req.session.user.name, {
+            name: req.body.name,
+            day: req.body.day,
+            title: req.body.title
+        });
+        care.save(function (err) {
+            if (err) {
+                res.json(util.format('%j', {
+                    code: 400,
+                    msg: '关注失败！'
+                }));
+            } else {
+                res.json(util.format('%j', {
+                    code: 200,
+                    msg: '关注成功'
+                }));
+            }
+        });
+    });
+
+    /**
+     * @desc 撤销关注路由
+     */
+    app.post('/removecare', function (req, res, next) {
+        var care = new Care(req.session.user.name, {
+            name: req.body.name,
+            day: req.body.day,
+            title: req.body.title
+        });
+        care.remove(function (err) {
+            if (err) {
+                res.json(util.format('%j', {
+                    code: 400,
+                    msg: '撤销关注失败！'
+                }));
+            } else {
+                res.json(util.format('%j', {
+                    code: 200,
+                    msg: '撤销关注成功'
+                }));
+            }
+        });
+    });
+
+    /**
+     * @desc 转发路由
+     */
+    app.post('/reprint', function (req, res, next) {
+        /* 不能准发自己 */
+        if (req.session.user.nam == req.body.name) {
+            res.json(util.format('%j', {
+                code: 400,
+                msg: '不能准发自己的文章哟！！'
+            }));
+        }
+        /* 不能重复转发 */
+
+        var reprint = new Reprint(req.session.user.name, {
+            name: req.body.name,
+            day: req.body.day,
+            title: req.body.title
+        });
+        reprint.save(function (err) {
+            if (err) {
+                res.json(util.format('%j', {
+                    code: 400,
+                    msg: '转发失败！'
+                }));
+            } else {
+                res.json(util.format('%j', {
+                    code: 200,
+                    msg: '转发成功'
+                }));
+            }
+        });
+    });
+
+    /**
+     * @desc 撤销转发路由
+     */
+    app.post('/removereprint', function (req, res, next) {
+        var reprint = new Reprint(req.session.user.name, {
+            name: req.body.name,
+            day: req.body.day,
+            title: req.body.title
+        });
+        reprint.remove(function (err) {
+            if (err) {
+                res.json(util.format('%j', {
+                    code: 400,
+                    msg: '撤销转发失败！'
+                }));
+            } else {
+                res.json(util.format('%j', {
+                    code: 200,
+                    msg: '撤销转发成功'
+                }));
+            }
         });
     });
 };
