@@ -199,19 +199,23 @@ module.exports = function (app) {
                 return tag;
             }
         });
-        var blog = new Blog(currentUser.name, currentUser.head, req.body.title,
-                tags, req.body.post);
-        blog.publish(function (err) {
-            if (err) {
-                res.json(util.format('%j', {
-                    code: 400,
-                    msg: '发表失败'
-                }));
-            } else {
-                res.json(util.format('%j', {
-                    code: 200,
-                    msg: '发表成功'
-                }));
+        User.findByName(currentUser.name, function (err, result) {
+            if (!err) {
+                var blog = new Blog(currentUser.name, result.head, req.body.title,
+                    tags, req.body.post);
+                blog.publish(function (err) {
+                    if (err) {
+                        res.json(util.format('%j', {
+                            code: 400,
+                            msg: '发表失败'
+                        }));
+                    } else {
+                        res.json(util.format('%j', {
+                            code: 200,
+                            msg: '发表成功'
+                        }));
+                    }
+                });
             }
         });
     });

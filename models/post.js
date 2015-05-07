@@ -25,6 +25,7 @@ var db = require('./db'),
         care: Number//关注
     }),
     Post = db.model('Post', BlogSchema),
+    markdown = require('markdown').markdown,
     tool = require('../tool/time');//调用工具类
 
 function Blog(name, head, title, tags, post) {
@@ -115,9 +116,9 @@ Blog.getBlogs = function (name, page, callback) {
                     return callback(err);
                 }
                 //解析markdown为html
-                /* var results = blogs.map(function (blog) {
-                 blog.post = markdown.toHTML(blog.post);
-                 return blog;
+                 /*var results = blogs.map(function (blog) {
+                    blog.post = markdown.toHTML(blog.post);
+                    return blog;
                  });*/
                 callback(null, blogs, count);
             });
@@ -214,9 +215,9 @@ Blog.getOne = function (name, day, title, callback) {
                     return callback(err);
                 }
             });
-            /*blog.post = markdown.toHTML(blog.post);*/
+            blog.post = markdown.toHTML(blog.post);
             blog.comments.map(function (comment) {
-                /*comment.content = markdown.toHTML(comment.content);*/
+                comment.content = markdown.toHTML(comment.content);
                 return comment;
             });
         }
